@@ -1,4 +1,9 @@
-# Getting Started
+### Table of contents
+
+1. [Reference Documentation](#reference-documentation)
+2. [Guides](#guides)
+3. [Style Guides](#style-guides)
+4. [Useful Commands](#useful-commands)
 
 ### Reference Documentation
 
@@ -29,3 +34,16 @@ The following guides illustrate how to use some features concretely:
 * [Managing Transactions](https://spring.io/guides/gs/managing-transactions/)
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 
+### Style Guides
+
+- [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
+### Useful Commands
+
+- `mvn clean` - clear the compiled files
+- `mvn compile` - compile the project
+- `mvn test` - run all tests
+-  `mvn clean package` - creates a runnable jar file after all tests are successful
+- `mvn clean package -DskipTests` - creates a runnable jar file without prior testing
+- `java -jar target/backend-0.0.1-SNAPSHOT.jar` - start the program
+- `java -Dspring.profiles.active=datagen -jar target/backend-0.0.1-SNAPSHOT.jar` - start the program and add initial test data
