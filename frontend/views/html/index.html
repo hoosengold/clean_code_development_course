@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="../../public/stylesheets/style.css"/>
+        <title>TicTacToe</title>
+    </head>
+    <body>
+        <nav>
+            <div class="logo" style="display: flex;align-items: center;">
+                <span style="color:#030303; font-size:26px; font-weight:bold; letter-spacing: 1px;margin-left: 20px;">TicTacToe</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Play Game</a></li>
+                <li><a href=#>Account</a></li>
+                <li><button class="login-button" onclick="window.location.href='login_signup.html'">Login</button></li>
+                <li><button class="signup-button" onclick="window.location.href='login_signup.html'">Sign up</button></li>
+            </ul>
+        </nav>
+        <button class="play-button">Play Tic Tac Toe</button>
+        <div class="game-grid">
+            <!-- Create the 3x3 grid here -->
+            <div class="cell"></div>
+            <!-- Repeat for other cells -->
+        </div>
+        <div class="game-stats">
+            <p>Wins(X): <span id="winsX">0</span></p>
+            <p>Ties: <span id="ties">0</span></p>
+            <p>Wins(O): <span id="winsO">0</span></p>
+        </div>
+    </body>
+</html>
