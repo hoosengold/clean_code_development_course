@@ -105,7 +105,7 @@ nav{
   cursor: pointer;
   position: relative;
   top: 154px;
-  left: 639px;
+  left: 680px;
   width: 162px;
   height: 56px;
   padding: 0 8px;
@@ -120,17 +120,15 @@ nav{
   line-height: 16px;
   outline: none;
 }
-
 .game-stats {
-  position: relative;
-  top: 184px;
+  position: fixed;
+  top: 50%;
   left: 1069px;
   color: #000000;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
   line-height: 21px;
 }
-
 body{
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
@@ -311,4 +309,34 @@ h6 span{
   background-color: #1e1f26;
   color: #FF9400;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
+.board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 6px;
+  border: 6px solid orange;
+  background-color: orange;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  cursor: pointer;
+  background-color: #ddd;
+  transition: background-color 0.3s ease;
+}
+.cell:hover {
+  background-color: #ccc;
 }
