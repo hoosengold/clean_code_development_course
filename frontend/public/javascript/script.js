@@ -20,8 +20,6 @@ function handleClick(row, col) {
     }
 }
 
-
-// Assuming you have a function to check for a winner
 function checkWinner() {
     // Check rows
     for (let i = 0; i < 3; i++) {
@@ -48,7 +46,6 @@ function checkWinner() {
     return null; // No winner
 }
 
-// Assuming you have a function to check for a draw
 function checkDraw() {
     for (let row of board) {
         if (row.includes('')) {
@@ -58,14 +55,13 @@ function checkDraw() {
     return true; // All cells filled, game is a draw
 }
 
-// Example usage (triggered on user input):
 function handleGameResult() {
     const winner = checkWinner();
     if (winner) {
-        console.log(`Player ${winner} wins!`);
+        document.getElementById('game-result').innerText = `Player ${winner} wins!`;
         isGameActive = false;
     } else if (checkDraw()) {
-        console.log("It's a draw!");
+        document.getElementById('game-result').innerText = "It's a tie!";
         isGameActive = false;
     } else {
         console.log("Game still ongoing.");
