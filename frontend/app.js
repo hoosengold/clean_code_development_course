@@ -10,7 +10,7 @@ let indexRouter = require('./routes/index');
 let app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/ejs'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
@@ -20,6 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/login', indexRouter);
+app.use('/signup', indexRouter);
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
