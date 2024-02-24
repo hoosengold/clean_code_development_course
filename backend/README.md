@@ -3,7 +3,8 @@
 1. [Reference Documentation](#reference-documentation)
 2. [Guides](#guides)
 3. [Style Guides](#style-guides)
-4. [Useful Commands](#useful-commands)
+4. [Database](#database)
+5. [Useful Commands](#useful-commands)
 
 ### Reference Documentation
 
@@ -37,6 +38,21 @@ The following guides illustrate how to use some features concretely:
 ### Style Guides
 
 - [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
+### Database
+
+This project uses [H2](https://h2database.com/html/main.html) for the persistence of the data. It is used in both persistent and in-memory mode. You can [install and configure](https://h2database.com/html/quickstart.html) H2. Here is how to configure your *IntelliJ IDEA*:
+
+1. Click on `Database` on the right;
+2. Click on the `+` sign and choose H2;
+3. Enter the following information:
+   1. Name: `test_db` for the test in-memory database or `production_db` for the production database;
+   2. Authentication: `Username & Password`
+   3. Username: `sa`
+   4. Password: ``
+   5. URL: `jdbc:h2:mem:test_db` for `test_db` or `jdbc:h2:tcp://localhost:9092/path/to/local/production_db`
+
+You can start the [H2 Server](https://h2database.com/html/tutorial.html#using_server) with `java -cp /path/to/h2*.jar org.h2.tools.Server`
 
 ### Useful Commands
 
