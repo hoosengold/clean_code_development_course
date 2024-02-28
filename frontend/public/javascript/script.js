@@ -5,6 +5,9 @@ let board = [
     ['', '', '']
 ];
 let isGameActive = true;
+let xWins = 0;
+let oWins = 0;
+let ties = 0;
 
 function isValidAction(row, col){
     return !(board[row][col].innerText === 'X' || board[row][col].innerText === 'O');
@@ -60,10 +63,43 @@ function handleGameResult() {
     if (winner) {
         document.getElementById('game-result').innerText = `Player ${winner} wins!`;
         isGameActive = false;
+        document.getElementById('new-game-button').style.display = 'block';
+        if (winner === 'X') {
+            xWins++;
+        } else {
+            oWins++;
+        }
+        gameStats();
     } else if (checkDraw()) {
         document.getElementById('game-result').innerText = "It's a tie!";
         isGameActive = false;
+        document.getElementById('new-game-button').style.display = 'block';
+        ties++;
+        gameStats();
     } else {
         console.log("Game still ongoing.");
     }
+}
+
+function gameStats() {
+    document.getElementById('winsX').innerText = xWins;
+    document.getElementById('winsO').innerText = oWins;
+    document.getElementById('ties').innerText = ties;
+}
+
+function startNewGame() {
+    // Clear the board (reset all cells to empty)
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            board[i][j] = '';
+            document.getElementById('board').children[i * 3 + j].innerText = '';
+        }
+    }
+
+    // Reset game state
+    currentPlayer = 'X';
+    document.getElementById('display-player').innerText = 'Player X\'s turn';
+    document.getElementById('game-result').innerText = ''; // Clear result
+    document.getElementById('new-game-button').style.display = 'none';
+    isGameActive = true;
 }
