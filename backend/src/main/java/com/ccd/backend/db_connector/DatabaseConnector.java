@@ -3,9 +3,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private String DB_URL = "jdbc:h2:mem:test_db";
+    private String JDBC_URL = "jdbc:h2:mem:test_db";
     private String USER = "sa";
-    private String PASS = "";
+    private String PASSWORD = "";
     private Connection connection;
 
     public void openConnection() {
