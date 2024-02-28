@@ -163,6 +163,35 @@ nav{
   line-height: 16px;
 }
 
+.start-new-game-button {
+  cursor: pointer;
+  position: fixed;
+  top: 250px;
+  right: 350px;
+  width: 162px;
+  height: 56px;
+  padding: 0 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(3,3,3,0.1);
+  background-color: #ff9500;
+  color: #000000;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  line-height: 16px;
+  outline: none;
+  display: none;
+}
+
+.start-new-game-button:hover {
+  color: #131418;
+  background-color: #ff9500;
+  border:1.5px solid #f2f5f7;
+  transition: all ease-in-out 350ms;
+}
+
 body{
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
