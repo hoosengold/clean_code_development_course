@@ -1,5 +1,7 @@
 package com.ccd.backend.db_connector;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,11 +13,11 @@ public class DatabaseConnector {
     private Connection connection;
 
     public DatabaseConnector() {
-        this.jdbcUrl = System.getenv("JDBC_URL");
-        this.dbUser = System.getenv("DB_USER");
-        this.dbPassword = System.getenv("DB_PASSWORD");
+        Dotenv dotenv = Dotenv.load();
+        this.jdbcUrl = dotenv.get("JDBC_URL");
+        this.dbUser = dotenv.get("DB_USER");
+        this.dbPassword = dotenv.get("DB_PASSWORD");
     }
-
 
     public void openConnection() {
         try {
