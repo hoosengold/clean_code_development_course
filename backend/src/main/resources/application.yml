@@ -3,6 +3,7 @@ spring:
     url: jdbc:h2:mem:test_db
     username: sa
     password:
+    driverClassName: org.h2.Driver
   h2:
     console:
       path: /h2-console
