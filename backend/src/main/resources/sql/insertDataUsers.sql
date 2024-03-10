@@ -1,0 +1,18 @@
+INSERT INTO PUBLIC.Users (Username, Email, Password, RoleID, Score) VALUES
+    ('Regina', 'dui@aol.edu', 'GDN74RMU2OJ3ECM2LKMF9IAR2LX', 2, 34),
+    ('Denise', 'in.faucibus@yahoo.couk', 'BPN76RLR7TO8RIP3FDCE7GLI2UB', 1, 4),
+    ('Ulysses', 'eros.non.enim@icloud.couk', 'SJM65PYI6CE6DOJ8ZWKZ3URD9ML', 2, 89),
+    ('Rosalyn', 'phasellus@icloud.ca', 'EKD61QNR9GO2MZS3DVXB2DUF4UL', 2, 94),
+    ('Fredericka', 'ut@google.edu', 'FMN14MOY7OB4RXM2EUBV7JPV6WG', 3, 27),
+    ('Richard', 'vestibulum.ante@google.couk', 'CGN90BYP5PH3IXZ3PBHW1QWY1XU', 3, 94),
+    ('Kasper', 'sit.amet@protonmail.couk', 'AZW43TDD8OY1JZF3SJPF8OIO1RW', 3, 92),
+    ('Yolanda', 'dictum@aol.edu', 'FJN82TMY4ZR5DDB8XNSQ2WRX1KI', 3, 21),
+    ('Cooper', 'bibendum.ullamcorper@aol.edu', 'HUN39OYQ6QR8WAV2QPTN3GHV2RX', 1, 28),
+    ('Mariam', 'lacus.pede@google.edu', 'HEH28DII8RD7MRB4SSVS3BEK4BV', 2, 49),
+    ('Winifred', 'nulla@protonmail.couk', 'OOY87JDO1MJ8DBH2ORDO8KRX3PJ', 1, 45),
+    ('Hayden', 'ut.odio@hotmail.net', 'XIC17UUV5CF6LEC0OOYY7NDK8CF', 2, 62),
+    ('Jessamine', 'malesuada.fringilla.est@hotmail.ca', 'TTB27GKS5QM8RVZ6EIWQ8YOU3PC', 3, 9),
+    ('Justin', 'amet@google.com', 'YDY85UNQ2WF7TDH6JOWK8UVE7KY', 2, 1),
+    ('Colorado', 'inceptos.hymenaeos@protonmail.com', 'YJE24INV6QL9JQN7YLJV7NOF6WJ', 3, 76),
+    ('Clare', 'semper.dui.lectus@protonmail.ca', 'RYF41HXL4BO2LGQ7LSJG3JFD5WK', 3, 8),
+    ('Patrick', 'mauris@google.net', 'PDE36OTY5EB3OSO4OCKM8BEW8XG', 1, 23);
