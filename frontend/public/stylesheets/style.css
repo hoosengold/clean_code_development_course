@@ -97,6 +97,7 @@ nav{
   transition: all ease-in-out 350ms;
 }
 
+
 .turn {
   position: relative;
   top: 190px;
@@ -106,6 +107,69 @@ nav{
   color: #000000;
   font-size: 20px;
   line-height: 16px;
+}
+
+.sidebar {
+  position: fixed;
+  width: 300px;
+  top: 250px;
+  left: 280px;
+  background-color: #ffffff;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.newGame,
+.connectBtn {
+  display: block;
+  width: 95%;
+  margin: 15px auto;
+  height: 30px;
+  color: white;
+  font-size: 1.3rem;
+  background-color: #006666;
+}
+
+.joinLabel {
+  text-align: center;
+  display: block;
+  width: 95%;
+  margin: 15px auto 0;
+  height: 30px;
+  color: white;
+  font-size: 1.3rem;
+  background-color: #006666;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  width: 75%;
+  margin: 0 auto;
+  padding: 5px;
+  height: 30px;
+  /* color: white; */
+  font-size: 1rem;
+  background-color: #dfecec;
+  ;
+}
+
+.sidebar ul li:hover {
+  background-color: #75a3a3;
+}
+
+button[type='submit'] {
+  display: block;
+  width: 95%;
+  margin: 0 auto;
+  /* margin-top: 0x; */
+  height: 30px;
+  color: white;
+  font-size: 1.3rem;
+  background-color: #006666;
 }
 
 .board-container {
