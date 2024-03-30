@@ -1,90 +1,70 @@
+let isGameActive = true;
 let currentPlayer = 'X';
+let ws;
+let isMyTurn = true;
 let board = [
     ['', '', ''],
     ['', '', ''],
     ['', '', '']
 ];
-let isGameActive = true;
-let xWins = 0;
-let oWins = 0;
-let ties = 0;
 
-function isValidAction(row, col){
-    return !(board[row][col].innerText === 'X' || board[row][col].innerText === 'O');
+function initWebSocket() {
+    ws = new WebSocket('ws://localhost:3000');
+
+    ws.onopen = function () {
+        console.log('WebSocket connection established');
+    };
+
+    ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        if (data.type === 'game_state') {
+            updateGameState(data.payload);
+            isMyTurn = data.payload.currentPlayer === currentPlayer;
+        } else if (data.type === 'game_result') {
+            handleGameResult(data.payload);
+        }
+    };
+
+    ws.onerror = function (error) {
+        console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = function () {
+        console.log('WebSocket connection closed');
+    };
 }
 
 function handleClick(row, col) {
-    if (isValidAction(row, col) && isGameActive && board[row][col] === '') {
-        board[row][col] = currentPlayer;
-        document.getElementById('board').children[row * 3 + col].innerText = currentPlayer;
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        document.getElementById('display-player').innerText = `Player ${currentPlayer}'s turn`;
-        handleGameResult();
-    }
-}
-
-function checkWinner() {
-    // Check rows
-    for (let i = 0; i < 3; i++) {
-        if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
-            return board[i][0]; // Winner found
-        }
-    }
-
-    // Check columns
-    for (let j = 0; j < 3; j++) {
-        if (board[0][j] !== '' && board[0][j] === board[1][j] && board[1][j] === board[2][j]) {
-            return board[0][j]; // Winner found
-        }
-    }
-
-    // Check diagonals
-    if (board[0][0] !== '' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
-        return board[0][0]; // Winner found
-    }
-    if (board[0][2] !== '' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
-        return board[0][2]; // Winner found
-    }
-
-    return null; // No winner
-}
-
-function checkDraw() {
-    for (let row of board) {
-        if (row.includes('')) {
-            return false; // Empty cell found, game not a draw
-        }
-    }
-    return true; // All cells filled, game is a draw
-}
-
-function handleGameResult() {
-    const winner = checkWinner();
-    if (winner) {
-        document.getElementById('game-result').innerText = `Player ${winner} wins!`;
-        isGameActive = false;
-        document.getElementById('new-game-button').style.display = 'block';
-        if (winner === 'X') {
-            xWins++;
-        } else {
-            oWins++;
-        }
-        gameStats();
-    } else if (checkDraw()) {
-        document.getElementById('game-result').innerText = "It's a tie!";
-        isGameActive = false;
-        document.getElementById('new-game-button').style.display = 'block';
-        ties++;
-        gameStats();
+    if (isGameActive && isMyTurn) {
+        const move = { type: 'move', payload: { row, col }, player: currentPlayer };
+        ws.send(JSON.stringify(move));
     } else {
-        console.log("Game still ongoing.");
+        console.log("It's not your turn!");
     }
 }
 
-function gameStats() {
-    document.getElementById('winsX').innerText = xWins;
-    document.getElementById('winsO').innerText = oWins;
-    document.getElementById('ties').innerText = ties;
+function updateGameState(gameState) {
+    currentPlayer = gameState.currentPlayer;
+    isGameActive = gameState.isGameActive;
+    isMyTurn = currentPlayer === 'X';
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            document.getElementById(`cell-${i}-${j}`).innerText = gameState.board[i][j];
+        }
+    }
+
+    document.getElementById('display-player').innerText = `Player ${currentPlayer}'s turn`;
+}
+
+function handleGameResult(result) {
+    document.getElementById('game-result').innerText = result.message;
+
+    document.getElementById('winsX').innerText = result.xWins;
+    document.getElementById('winsO').innerText = result.oWins;
+    document.getElementById('ties').innerText = result.ties;
+
+    document.getElementById('new-game-button').style.display = 'block';
 }
 
 function startNewGame() {
@@ -92,14 +72,21 @@ function startNewGame() {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             board[i][j] = '';
-            document.getElementById('board').children[i * 3 + j].innerText = '';
+            document.getElementById(`cell-${i}-${j}`).innerText = '';
         }
     }
 
     // Reset game state
     currentPlayer = 'X';
-    document.getElementById('display-player').innerText = 'Player X\'s turn';
+    document.getElementById('display-player').innerText = `Player ${currentPlayer}'s turn`;
     document.getElementById('game-result').innerText = ''; // Clear result
     document.getElementById('new-game-button').style.display = 'none';
     isGameActive = true;
+
+    // Inform the server that a new game has started
+    const message = { type: 'start_new_game' };
+    ws.send(JSON.stringify(message));
 }
+
+
+initWebSocket();
