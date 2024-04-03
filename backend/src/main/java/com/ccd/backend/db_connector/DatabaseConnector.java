@@ -40,6 +40,14 @@ public class DatabaseConnector {
         }
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     public void selectUser(int id) {
         String query = "SELECT username, email, password FROM users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -59,12 +67,14 @@ public class DatabaseConnector {
         }
     }
 
-    public void insertUser(String username, String email, String password) {
-        String query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    public void insertUser(String username, String email, String password, String role, int initialScore) {
+        String query = "INSERT INTO users (username, email, password, role, initial_score) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             statement.setString(2, email);
             statement.setString(3, password);
+            statement.setString(4, role);
+            statement.setInt(5, initialScore);
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("User inserted successfully.");
@@ -77,13 +87,11 @@ public class DatabaseConnector {
         }
     }
 
-    public void updateUser(int id, String username, String email, String password) {
-        String query = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
+    public void updateUser(int id, String field, String value) {
+        String query = "UPDATE users SET " + field + " = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            statement.setString(2, email);
-            statement.setString(3, password);
-            statement.setInt(4, id);
+            statement.setString(1, value);
+            statement.setInt(2, id);
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("User updated successfully.");
