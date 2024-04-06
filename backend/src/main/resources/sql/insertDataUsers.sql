@@ -1,4 +1,4 @@
-INSERT INTO PUBLIC.Users (Username, Email, Password, RoleID, Score) VALUES
+INSERT INTO PUBLIC.USERS (USERNAME, EMAIL, PASSWORD, ROLEID, SCORE) VALUES
     ('Regina', 'dui@aol.edu', 'GDN74RMU2OJ3ECM2LKMF9IAR2LX', 2, 34),
     ('Denise', 'in.faucibus@yahoo.couk', 'BPN76RLR7TO8RIP3FDCE7GLI2UB', 1, 4),
     ('Ulysses', 'eros.non.enim@icloud.couk', 'SJM65PYI6CE6DOJ8ZWKZ3URD9ML', 2, 89),

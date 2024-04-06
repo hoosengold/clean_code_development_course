@@ -1,4 +1,4 @@
-INSERT INTO PUBLIC.Permissions (Name, Description) VALUES
+INSERT INTO PUBLIC.PERMISSIONS (NAME, DESCRIPTION) VALUES
     ('Play Game', 'Can play the game available on the website'),
     ('View Leaderboard', 'Can view the leaderboard'),
     ('Manage Users', 'Can create, update, or delete user accounts'),
