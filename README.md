@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/hoosengold/clean_code_development_course/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/hoosengold/clean_code_development_course/actions/workflows/maven.yml)
+
 # Clean Code Development
 A repository for our *Clean Code Development* Course. The final product will be a Tic-Tac-Toe web application with account and online multiplayer support. 
 
