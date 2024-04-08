@@ -16,6 +16,8 @@ on:
       
   pull_request:
     branches: [ "main" ]
+    paths:
+      - '**.java'
 
 jobs:
   build:
