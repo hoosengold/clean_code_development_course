@@ -11,6 +11,9 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "**hoosengold**", "**Bordo30**", "**IvanDimov02**", "**AlexanderRuskov**" ]
+    paths:
+      - '**.java'
+      
   pull_request:
     branches: [ "main" ]
 
