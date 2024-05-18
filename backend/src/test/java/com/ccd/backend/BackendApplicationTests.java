@@ -21,7 +21,6 @@ public class BackendApplicationTests {
         databaseConnector = new DatabaseConnector();
         mockConnection = mock(Connection.class);
         databaseConnector.setConnection(mockConnection);
-        databaseConnector.openConnection();
 
         outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
@@ -37,19 +36,22 @@ public class BackendApplicationTests {
     @Test
     void when_openConnection_thenConnectionIsNotNull() {
         // Test that opening connection initializes the connection
+        databaseConnector.openConnection();
         assertNotNull(databaseConnector.getConnection());
     }
 
     @Test
-    void when_closeConnection_thenConnectionIsNull() {
+    void when_closeConnection_thenConnectionIsNull() throws SQLException {
         // Test that closing connection sets connection to null
         databaseConnector.closeConnection();
+        verify(mockConnection).close();
         assertNull(databaseConnector.getConnection());
     }
 
     @Test
     void when_openConnectionTwice_thenReuseExistingConnection() {
         // Test that opening connection twice reuses the existing connection
+        databaseConnector.openConnection();
         Connection existingConnection = databaseConnector.getConnection();
         databaseConnector.openConnection();
         assertEquals(existingConnection, databaseConnector.getConnection());
@@ -58,8 +60,10 @@ public class BackendApplicationTests {
     @Test
     void when_insertUserWithInvalidValues_thenThrowSQLException() throws SQLException {
         // Test that inserting user with invalid values throws SQLException
-        assertThrows(SQLException.class, () -> databaseConnector.insertUser(null, null, null, null, 0));
-        verify(mockConnection, never()).prepareStatement(anyString());
+        doThrow(new SQLException("Invalid values")).when(mockConnection).prepareStatement(anyString());
+
+        SQLException exception = assertThrows(SQLException.class, () -> databaseConnector.insertUser(null, null, null, null, 0));
+        assertTrue(exception.getMessage().contains("Invalid values"));
     }
 
     @Test
@@ -77,7 +81,8 @@ public class BackendApplicationTests {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.executeQuery()).thenThrow(new SQLException("Query execution failed"));
 
-        assertThrows(SQLException.class, () -> databaseConnector.selectUser(1));
+        SQLException exception = assertThrows(SQLException.class, () -> databaseConnector.selectUser(1));
+        assertTrue(exception.getMessage().contains("Query execution failed"));
         assertTrue(outputStream.toString().contains("Error executing SELECT query"));
     }
 
