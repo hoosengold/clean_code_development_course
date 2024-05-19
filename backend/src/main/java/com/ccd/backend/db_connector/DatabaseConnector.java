@@ -25,8 +25,10 @@ public class DatabaseConnector {
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Failed to connect to the database: " + e.getMessage());
             e.printStackTrace();
+            connection = null; // Set connection to null if connection fails
         }
     }
+
 
     public void closeConnection() {
         if (connection != null) {
@@ -36,6 +38,8 @@ public class DatabaseConnector {
             } catch (SQLException e) {
                 System.err.println("Error while closing the connection: " + e.getMessage());
                 e.printStackTrace();
+            } finally {
+                connection = null; // Set connection to null
             }
         }
     }
@@ -48,7 +52,7 @@ public class DatabaseConnector {
         return connection;
     }
 
-    public void selectUser(int id) {
+    public String selectUser(int id) throws SQLException {
         String query = "SELECT username, email, password FROM users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
@@ -57,17 +61,21 @@ public class DatabaseConnector {
                 String username = resultSet.getString("username");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                System.out.println("Username: " + username + ", Email: " + email + ", Password: " + password);
+                return "Username: " + username + ", Email: " + email + ", Password: " + password;
             } else {
-                System.out.println("No user found with id " + id);
+                return "No user found with id " + id;
             }
         } catch (SQLException e) {
             System.err.println("Error executing SELECT query: " + e.getMessage());
-            e.printStackTrace();
+            throw e; // Rethrow the exception
         }
     }
 
-    public void insertUser(String username, String email, String password, String role, int initialScore) {
+    public void insertUser(String username, String email, String password, String role, int initialScore) throws SQLException {
+        if (username == null || email == null || password == null || role == null) {
+            throw new SQLException("Invalid values");
+        }
+
         String query = "INSERT INTO users (username, email, password, role, initial_score) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
@@ -75,15 +83,11 @@ public class DatabaseConnector {
             statement.setString(3, password);
             statement.setString(4, role);
             statement.setInt(5, initialScore);
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("User inserted successfully.");
-            } else {
-                System.out.println("Failed to insert user.");
-            }
+            statement.executeUpdate();
+            System.out.println("User inserted successfully.");
         } catch (SQLException e) {
             System.err.println("Error executing INSERT query: " + e.getMessage());
-            e.printStackTrace();
+            throw e;
         }
     }
 
