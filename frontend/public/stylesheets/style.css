@@ -161,17 +161,6 @@ nav{
   background-color: #75a3a3;
 }
 
-button[type='submit'] {
-  display: block;
-  width: 95%;
-  margin: 0 auto;
-  /* margin-top: 0x; */
-  height: 30px;
-  color: white;
-  font-size: 1.3rem;
-  background-color: #006666;
-}
-
 .board-container {
   display: flex;
   justify-content: center;
@@ -265,6 +254,71 @@ body{
   overflow: hidden;
   height: 100vh;
 }
+
+.profile-container{
+  position: relative;
+  top: 100px;
+  left:50px;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.profile-info, .game-data, .settings {
+  position: relative;
+}
+
+h2 {
+  position: relative;
+  font-size: 20px;
+  color: #444;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.info p, .game-data p {
+  position: relative;
+  font-size: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input {
+  margin-bottom: 10px;
+  width: 400px;
+  padding: 8px;
+  display: inline-block;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button[type='submit'] {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #ff9400;
+  color: #1e1f26;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e1f26;
+  color: #ff9400;
+}
+
 a:hover {
   text-decoration: none;
 }
