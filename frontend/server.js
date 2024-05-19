@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
-const ejs = require('ejs');
+const indexRouter = require('./routes/index');
 
 const app = express();
 const server = http.createServer(app);
@@ -10,6 +10,7 @@ const wss = new WebSocket.Server({ server });
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views', 'ejs'));
+app.use('/', indexRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

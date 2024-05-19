@@ -5,6 +5,11 @@ let router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index');
 });
+
+router.get('/account', function(req, res, next) {
+  res.render('account');
+});
+
 router.get('/login', function(req, res, next) {
   res.render('login_signup');
 });
