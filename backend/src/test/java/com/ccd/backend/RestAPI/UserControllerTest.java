@@ -1,3 +1,6 @@
+package com.ccd.backend.RestAPI;
+
+import com.ccd.backend.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,7 +30,7 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterUser_Success() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.get("/register")
                 .param("username", "testuser")
                 .param("email", "test@example.com")
                 .param("password", "securePassword")
@@ -38,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterUser_MissingUsername() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.get("/register")
                 .param("email", "test@example.com")
                 .param("password", "securePassword")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -48,7 +51,7 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterUser_MissingPassword() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.get("/register")
                 .param("username", "testuser")
                 .param("email", "test@example.com")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -58,7 +61,7 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterUser_MissingEmail() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.get("/register")
                 .param("username", "testuser")
                 .param("password", "securePassword")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -66,3 +69,4 @@ public class UserControllerTest {
             .andExpect(MockMvcResultMatchers.content().string("Missing parameters"));
     }
 }
+
