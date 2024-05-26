@@ -4,7 +4,6 @@ import com.ccd.backend.db_connector.DatabaseConnector;
 import com.ccd.backend.entity.ApplicationUser;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,6 @@ import java.util.Objects;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationUserService implements UserService {
