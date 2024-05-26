@@ -16,7 +16,7 @@ public class DatabaseConnector {
     private Connection connection;
 
     public DatabaseConnector() {
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         this.jdbcUrl = dotenv.get("JDBC_URL");
         this.dbUser = dotenv.get("DB_USER");
         this.dbPassword = dotenv.get("DB_PASSWORD");
