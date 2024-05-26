@@ -34,6 +34,8 @@ public interface UserService {
 
     void updateUser(ApplicationUser applicationUser, String field, String newValue);
 
+    void updateUser(long id, String field, String newValue);
+
     /**
      * @param applicationUser user
      * @return ApplicationUser

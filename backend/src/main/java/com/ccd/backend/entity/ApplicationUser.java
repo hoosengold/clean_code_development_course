@@ -67,4 +67,9 @@ public class ApplicationUser {
         this.password = password;
         this.score = score;
     }
+
+    public ApplicationUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
