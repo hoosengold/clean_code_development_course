@@ -60,4 +60,11 @@ public class ApplicationUser {
         this.password = password;
         this.score = score;
     }
+
+    public ApplicationUser(String username, String email, String password, int score) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.score = score;
+    }
 }
