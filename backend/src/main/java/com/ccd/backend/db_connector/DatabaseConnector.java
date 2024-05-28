@@ -1,6 +1,9 @@
 package com.ccd.backend.db_connector;
 
+import com.ccd.backend.entity.ApplicationUser;
 import io.github.cdimascio.dotenv.Dotenv;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.*;
 
@@ -8,10 +11,12 @@ public class DatabaseConnector {
     private final String jdbcUrl;
     private final String dbUser;
     private final String dbPassword;
+    @Setter
+    @Getter
     private Connection connection;
 
     public DatabaseConnector() {
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         this.jdbcUrl = dotenv.get("JDBC_URL");
         this.dbUser = dotenv.get("DB_USER");
         this.dbPassword = dotenv.get("DB_PASSWORD");
@@ -32,6 +37,7 @@ public class DatabaseConnector {
         if (connection != null) {
             try {
                 connection.close();
+                connection = null;
                 System.out.println("Connection closed.");
             } catch (SQLException e) {
                 System.err.println("Error while closing the connection: " + e.getMessage());
@@ -40,24 +46,18 @@ public class DatabaseConnector {
         }
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void selectUser(int id) {
-        String query = "SELECT username, email, password FROM users WHERE id = ?";
+    public ApplicationUser selectUser(long id) {
+        String query = "SELECT id, email, password, score FROM users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String username = resultSet.getString("username");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                System.out.println("Username: " + username + ", Email: " + email + ", Password: " + password);
+                int score = resultSet.getInt("score");
+                System.out.println("Username: " + username + ", Email: " + email);
+                return new ApplicationUser(id, username, email, password, score);
             } else {
                 System.out.println("No user found with id " + id);
             }
@@ -65,16 +65,39 @@ public class DatabaseConnector {
             System.err.println("Error executing SELECT query: " + e.getMessage());
             e.printStackTrace();
         }
+        return null;
     }
 
-    public void insertUser(String username, String email, String password, String role, int initialScore) {
-        String query = "INSERT INTO users (username, email, password, role, initial_score) VALUES (?, ?, ?, ?, ?)";
+    public ApplicationUser selectUser(String username) {
+        String query = "SELECT id, email, password, score FROM users WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
-            statement.setString(2, email);
-            statement.setString(3, password);
-            statement.setString(4, role);
-            statement.setInt(5, initialScore);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                int score = resultSet.getInt("score");
+                System.out.println("Username: " + username + ", Email: " + email);
+                return new ApplicationUser(id, username, email, password, score);
+            } else {
+                System.out.println("No user found with username " + username);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error executing SELECT query: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void insertUser(ApplicationUser applicationUser) {
+        String query = "INSERT INTO users (username, email, password, roleid, score) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, applicationUser.getUsername());
+            statement.setString(2, applicationUser.getEmail());
+            statement.setString(3, applicationUser.getPassword());
+            statement.setString(4, applicationUser.getRole());
+            statement.setInt(5, applicationUser.getScore());
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("User inserted successfully.");
@@ -87,11 +110,11 @@ public class DatabaseConnector {
         }
     }
 
-    public void updateUser(int id, String field, String value) {
+    public void updateUser(long id, String field, String value) {
         String query = "UPDATE users SET " + field + " = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, value);
-            statement.setInt(2, id);
+            statement.setLong(2, id);
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("User updated successfully.");

@@ -1,5 +1,7 @@
 package com.ccd.backend.RestAPI;
 
+import com.ccd.backend.entity.ApplicationUser;
+import com.ccd.backend.service.user.ApplicationUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,12 +15,24 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/register")
     public ResponseEntity<String> registerUser(
-        @RequestParam(required = false) String username,
-        @RequestParam(required = false) String email,
-        @RequestParam(required = false) String password) {
+
+        @RequestParam String username,
+        @RequestParam String email,
+        @RequestParam String password) {
+
+
 
         if (username == null || email == null || password == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing parameters");
+        }
+
+
+        ApplicationUserService userService = new ApplicationUserService();
+        ApplicationUser user = new ApplicationUser(username, email, password, 0);
+        try {
+            userService.registerUser(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong while registereing the user! Please try again!");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
