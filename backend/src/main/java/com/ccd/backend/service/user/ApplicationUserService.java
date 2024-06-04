@@ -15,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationUserService implements UserService {
-    private DatabaseConnector DbConnector;
+    private DatabaseConnector DbConnector = new DatabaseConnector();
     private static final Set<String> fieldOptions = Set.of("username", "email", "password", "score");
 
     @Override
