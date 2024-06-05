@@ -31,7 +31,7 @@ public class UserController {
         try {
             userService.registerUser(user);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong while registereing the user! Please try again!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong while registering the user! Please try again!");
         }
         return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
     }
